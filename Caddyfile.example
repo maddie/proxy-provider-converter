@@ -1,6 +1,14 @@
 # Caddyfile 配置示例
 # 将此文件放在 /etc/caddy/Caddyfile
 
+# 方式1: 根路径
 your-domain.com {
     reverse_proxy localhost:3000
+}
+
+# 方式2: 子路径 (推荐)
+your-domain.com {
+    handle_path /proxy/* {
+        reverse_proxy localhost:3000
+    }
 }

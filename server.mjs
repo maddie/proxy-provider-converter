@@ -59,8 +59,8 @@ app.get(`${BASE_PATH}/*`, (req, res) => {
   res.sendFile(join(__dirname, "dist", "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, "127.0.0.1", () => {
+  console.log(`Server running on http://127.0.0.1:${PORT}`);
 });
 
 // 核心转换逻辑（从 src/core/convert.ts 复制）

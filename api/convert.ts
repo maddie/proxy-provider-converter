@@ -10,11 +10,13 @@ export default async function handler(request: any, response: any) {
   const querySchema = z.object({
     url: z.string().url(),
     target: z.enum(["clash", "surge"]).default("clash"),
+    "user-agent": z.string().optional(),
   });
 
   const parsed = querySchema.safeParse({
     url: toString(request.query?.url),
     target: toString(request.query?.target),
+    "user-agent": toString(request.query?.["user-agent"]),
   });
 
   if (!parsed.success) {
@@ -26,8 +28,9 @@ export default async function handler(request: any, response: any) {
   }
 
   const { url, target } = parsed.data;
+  const userAgent = parsed.data["user-agent"] || request.headers?.["user-agent"];
   try {
-    const result = await convertFromSubscription(url, target);
+    const result = await convertFromSubscription(url, target, userAgent);
     response.setHeader("Content-Type", "text/plain; charset=utf-8");
     response.status(200).send(result);
   } catch (error) {

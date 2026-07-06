@@ -41,9 +41,10 @@ type Proxy =
 
 export async function convertFromSubscription(
   url: string,
-  target: "clash" | "surge"
+  target: "clash" | "surge",
+  userAgent?: string
 ): Promise<string> {
-  let configFile = await fetchConfig(url);
+  let configFile = await fetchConfig(url, userAgent);
   if (configFile === null) {
     throw new Error("Unable to get config");
   }
@@ -153,12 +154,11 @@ export async function convertFromSubscription(
   throw new Error("Unsupported conversion combination");
 }
 
-async function fetchConfig(url: string): Promise<string | null> {
+async function fetchConfig(url: string, userAgent?: string): Promise<string | null> {
   const result = await axios({
     url,
     headers: {
-      "User-Agent":
-        "ClashX Pro/1.72.0.4 (com.west2online.ClashXPro; build:1.72.0.4; macOS 12.0.1) Alamofire/5.4.4",
+      "User-Agent": userAgent || "clash.meta",
     },
   });
 

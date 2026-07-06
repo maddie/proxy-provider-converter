@@ -6,6 +6,7 @@ export default {
   plugins: [react(), tailwindcss()],
   root: ".",
   publicDir: "public",
+  base: "./",
   build: {
     outDir: "dist",
     sourcemap: false,

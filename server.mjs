@@ -13,10 +13,10 @@ const PORT = process.env.PORT || 3000;
 const BASE_PATH = process.env.BASE_PATH || "";
 
 // 静态文件服务
-app.use(BASE_PATH, express.static(join(__dirname, "dist")));
+app.use(express.static(join(__dirname, "dist")));
 
 // API路由
-app.get(`${BASE_PATH}/api/convert`, async (req, res) => {
+app.get("/api/convert", async (req, res) => {
   const toString = (value) => {
     if (Array.isArray(value)) return value[0];
     return value;
@@ -55,7 +55,7 @@ app.get(`${BASE_PATH}/api/convert`, async (req, res) => {
 });
 
 // SPA回退
-app.get(`${BASE_PATH}/*`, (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(join(__dirname, "dist", "index.html"));
 });
 

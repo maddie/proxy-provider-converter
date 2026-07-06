@@ -1,0 +1,6 @@
+# Caddyfile 配置示例
+# 将此文件放在 /etc/caddy/Caddyfile
+
+your-domain.com {
+    reverse_proxy localhost:3000
+}

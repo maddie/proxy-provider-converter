@@ -51,9 +51,19 @@ sudo nano /etc/caddy/Caddyfile
 
 添加以下内容（将 `your-domain.com` 替换为你的域名）：
 
+**方式1: 根路径**
 ```caddyfile
 your-domain.com {
     reverse_proxy localhost:3000
+}
+```
+
+**方式2: 子路径（推荐）**
+```caddyfile
+your-domain.com {
+    handle_path /proxy/* {
+        reverse_proxy localhost:3000
+    }
 }
 ```
 
@@ -101,12 +111,22 @@ sudo systemctl start proxy-converter
 
 ## 使用示例
 
+**根路径部署**
 ```
 # 使用默认 User-Agent
 https://your-domain.com/api/convert?url=https://example.com/sub&target=clash
 
 # 自定义 User-Agent
 https://your-domain.com/api/convert?url=https://example.com/sub&target=clash&ua=MyApp/1.0
+```
+
+**子路径部署**
+```
+# 使用默认 User-Agent
+https://your-domain.com/proxy/api/convert?url=https://example.com/sub&target=clash
+
+# 自定义 User-Agent
+https://your-domain.com/proxy/api/convert?url=https://example.com/sub&target=clash&ua=MyApp/1.0
 ```
 
 ## 环境变量
